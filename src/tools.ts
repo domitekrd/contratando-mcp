@@ -250,7 +250,7 @@ export const TOOLS: DefinicionToolCliente[] = [
   // --- Escritura: importación en lote (scraper) ------------------------------------
   tool(
     'vacantes_importar_lote', 'Importar vacantes en lote (scraper)',
-    'Crea vacantes a partir de un lote ya parseado por vos, a partir de mensajes crudos leídos con scraper_mensajes_pendientes. Nacen PUBLICADAS directo, sin moderación. Cada item necesita origenId único y al menos descripción/textoOriginal + una forma de aplicar (enlace, teléfono o correo). Reimportar el mismo origenId no duplica.',
+    'Crea vacantes a partir de un lote ya parseado por vos, a partir de mensajes crudos leídos con scraper_mensajes_pendientes. Nacen en BORRADOR — el dueño las revisa y aprueba (o descarta) en lote desde /moderacion/vacantes antes de que salgan públicas. Cada item necesita origenId único y al menos descripción/textoOriginal + una forma de aplicar (enlace, teléfono o correo). Reimportar el mismo origenId no duplica.',
     z.object({ items: z.array(itemImportacion).min(1).max(500) }),
   ),
 
