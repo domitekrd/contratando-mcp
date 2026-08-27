@@ -82,6 +82,32 @@ const datosVacante = {
   beneficiosPersonalizados: z.array(z.string().trim().min(1).max(200)).default([]),
 };
 
+/** Item del lote de importación (scraper) — mismo schema laxo que
+ *  `validaciones-importacion.ts` del lado de Contratando: todo estructurado
+ *  es opcional, cae a un default razonable. */
+const itemImportacion = z.object({
+  origenId: z.string().trim().min(3).max(200),
+  titulo: z.string().trim().min(2).max(160).optional(),
+  nombreEmpresa: z.string().trim().min(2).max(160).optional(),
+  zona: z.enum(ZONAS).optional(),
+  categoria: z.enum(CATEGORIAS).optional(),
+  tipoContrato: z.enum(TIPOS_CONTRATO).optional(),
+  textoOriginal: z.string().trim().max(8000).optional(),
+  descripcion: z.string().trim().max(8000).optional(),
+  requisitos: z.string().trim().max(4000).optional(),
+  salarioMin: z.number().min(0).max(9_999_999).optional(),
+  salarioMax: z.number().min(0).max(9_999_999).optional(),
+  incluyeTransporte: z.boolean().optional(),
+  incluyeAlojamiento: z.boolean().optional(),
+  incluyeAlimentacion: z.boolean().optional(),
+  turnoRotativo: z.boolean().optional(),
+  urgente: z.boolean().optional(),
+  enlaceExternoPostulacion: z.string().trim().max(2000).optional(),
+  contactoTelefono: z.string().trim().max(40).optional(),
+  contactoEmail: z.string().trim().max(200).optional(),
+  fechaOriginal: z.string().trim().optional(),
+});
+
 const filtrosTalento = {
   q: z.string().trim().max(120).optional(),
   zona: z.enum(ZONAS).optional(),
@@ -219,5 +245,24 @@ export const TOOLS: DefinicionToolCliente[] = [
       bannerTerminaEn: z.coerce.date().nullable().optional(), emailsActivos: z.boolean().optional(), digestScrapedActivo: z.boolean().optional(),
       digestScrapedFrecuenciaHoras: z.number().int().min(1).max(168).optional(),
     }),
+  ),
+
+  // --- Escritura: importación en lote (scraper) ------------------------------------
+  tool(
+    'vacantes_importar_lote', 'Importar vacantes en lote (scraper)',
+    'Crea vacantes a partir de un lote ya parseado por vos, a partir de mensajes crudos leídos con scraper_mensajes_pendientes. Nacen PUBLICADAS directo, sin moderación. Cada item necesita origenId único y al menos descripción/textoOriginal + una forma de aplicar (enlace, teléfono o correo). Reimportar el mismo origenId no duplica.',
+    z.object({ items: z.array(itemImportacion).min(1).max(500) }),
+  ),
+
+  // --- Lectura/escritura: cola de mensajes scrapeados -------------------------------
+  tool(
+    'scraper_mensajes_pendientes', 'Mensajes scrapeados pendientes de revisar',
+    'Lista mensajes crudos (Telegram/Facebook) que el scraper dejó sin procesar todavía — para que los parsees vos mismo y decidas cuáles importar con vacantes_importar_lote.',
+    z.object({ limite: z.number().int().min(1).max(200).default(50) }),
+  ),
+  tool(
+    'scraper_marcar_procesado', 'Marcar mensajes scrapeados como procesados',
+    'Marca mensajes de la cola como ya vistos (los hayas importado o descartado como spam) — para que scraper_mensajes_pendientes no los vuelva a mostrar.',
+    z.object({ ids: z.array(z.string().cuid()).min(1).max(200) }),
   ),
 ];
