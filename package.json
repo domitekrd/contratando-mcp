@@ -1,0 +1,19 @@
+{
+  "name": "contratando-mcp",
+  "version": "1.0.0",
+  "private": true,
+  "description": "MCP server para controlar Contratando (contratandord.com) desde un agente de IA — puente HTTP hacia /api/mcp, sin acceso directo a la base de datos.",
+  "type": "module",
+  "scripts": {
+    "start": "tsx src/server.ts"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.30.0",
+    "zod": "^3.24.1"
+  },
+  "devDependencies": {
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.3",
+    "@types/node": "^22.10.7"
+  }
+}
