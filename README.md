@@ -12,6 +12,8 @@ Hermes → contratando-mcp (stdio, local) → HTTPS + secreto → contratandord.
 
 La lógica real (qué mutación hace cada tool, validación, auditoría) vive en el repo de Contratando (`src/lib/mcp/registro.ts`). Este repo sólo declara los 46 tools (nombre, descripción, schema de entrada) para que el agente sepa qué puede pedir.
 
+Si vas a usar `scraper_mensajes_pendientes` + `vacantes_importar_lote` (el flujo de scraper → borrador → moderación), ver [`PARSING.md`](./PARSING.md) para la estructura exacta que espera cada item del lote.
+
 ## Setup
 
 ```bash
