@@ -44,9 +44,10 @@ Asigna la ubicación de la vacante a uno de estos valores. Si no se especifica o
 Usa uno de los siguientes. Si no se especifica, asume `TIEMPO_COMPLETO`.
 `TIEMPO_COMPLETO`, `MEDIO_TIEMPO`, `TEMPORAL`, `POR_TEMPORADA`, `PASANTIA`
 
-### 4. Campos de Contacto (¡Importante!)
+### 4. Campos de Contacto (¡CRÍTICO, no opcional!)
 * Los campos de contacto son **planos**. Debes generar `contactoEmail` y `contactoTelefono` directamente en la raíz del objeto. **NO** crees un objeto anidado `"contacto": { ... }`.
 * El teléfono debe formatearse en lo posible como `XXX-XXX-XXXX`.
+* **Si el texto trae un correo o teléfono, SIEMPRE tiene que quedar en `contactoEmail`/`contactoTelefono` — no alcanza con que esté en `textoOriginal`/`descripcion`.** El sistema usa estos dos campos (no la descripción) para mandarle un aviso automático al reclutador que todavía no está en la plataforma — si el correo se queda solo en el texto, esa persona nunca recibe el aviso, aunque la vacante se vea perfecta en el sitio. Antes de dar por terminado un item, releé tu propio `textoOriginal`: si tiene un `@algo.com` o un número de teléfono y `contactoEmail`/`contactoTelefono` quedaron vacíos, es un error — corregilo.
 
 ### 5. Nombre de la Empresa (`nombreEmpresa`)
 * **Debe ser único y distinto para cada empleador.**
