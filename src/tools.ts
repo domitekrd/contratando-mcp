@@ -263,6 +263,8 @@ export const TOOLS: DefinicionToolCliente[] = [
   tool(
     'scraper_marcar_procesado', 'Marcar mensajes scrapeados como procesados',
     'Marca mensajes de la cola como ya vistos (los hayas importado o descartado como spam) — para que scraper_mensajes_pendientes no los vuelva a mostrar.',
-    z.object({ ids: z.array(z.string().cuid()).min(1).max(200) }),
+    // El id de MensajeScrapeado es un UUID (lo genera el scraper de Python
+    // con gen_random_uuid()::text), no un cuid.
+    z.object({ ids: z.array(z.string().min(1).max(100)).min(1).max(200) }),
   ),
 ];
