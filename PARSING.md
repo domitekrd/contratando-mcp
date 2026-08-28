@@ -64,6 +64,7 @@ Usa uno de los siguientes. Si no se especifica, asume `TIEMPO_COMPLETO`.
 ### 7. Texto Original (`textoOriginal`)
 * Pega el texto tal cual venía, con sus saltos de línea (usando `\n` en el JSON).
 * Este es el campo de respaldo principal del sistema, no elimines la descripción.
+* No te preocupes por el correo que venga adentro del texto — el sistema lo saca automáticamente de `descripcion`/`textoOriginal`/`requisitos` al importar (si un candidato ve el correo en la página pública, le escribe directo y se salta "Postularse" — se pierde el lead). Vos igual tenés que poner ese correo en `contactoEmail` (regla 4) — el sistema lo usa de ahí como respaldo si no lo pusiste, pero no confíes en eso: extraelo siempre a mano.
 
 ### 8. Filtrado de Ruido
 Si el texto no es una vacante de empleo legítima (es alguien buscando trabajo, una pregunta, spam o anuncios de venta), **omítelo por completo** del array resultante. No lo incluyas.
