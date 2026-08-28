@@ -87,3 +87,18 @@ corregir algo antes de publicarla. No hace falta preguntar "¿la publico?"
 Después de importar, marcá los mensajes como procesados con
 `scraper_marcar_procesado` (los hayas importado o descartado como spam) —
 si no, `scraper_mensajes_pendientes` te los va a volver a mostrar.
+
+## Antes de importar: chequeá que no esté ya publicada
+
+El mismo cartel se repuplica seguido (el grupo lo vuelve a postear, o sale
+en Telegram y Facebook con textos distintos) — eso genera un `origenId`
+nuevo cada vez, así que el dedupe automático (por `origenId`) NO lo agarra.
+
+Antes de meter un candidato al lote de `vacantes_importar_lote`, buscá por
+título con `vacantes_buscar` (`q: "<título corto>"`, opcionalmente `zona`).
+Si ya hay una vacante PUBLICADA con título y empresa equivalentes, no la
+reimportes — descartala como duplicada al marcar procesado. `vacantes_buscar`
+sólo trae PUBLICADAS; si el mismo cartel ya está en BORRADOR de una corrida
+anterior tuya (todavía sin revisar), vas a verlo repetido en
+`/moderacion/vacantes` — evitalo también revisando tu propio lote antes de
+mandarlo (mismo título + empresa + zona en el mismo lote = quedate con uno).
